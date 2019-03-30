@@ -3,7 +3,7 @@ import parseHeaders from './parseHeaders'
 import isURLSameOrigin from './isURLSameOrigin'
 import cookies from './cookies'
 import { forEach } from './utils'
-import { AxiosTransformer } from '..'
+import { AxiosTransformer } from '../../index'
 
 const isAbsoluteURL = (url: string): boolean => {
   return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)

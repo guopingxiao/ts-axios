@@ -1,4 +1,4 @@
-import { Interceptor } from '..'
+import { Interceptor } from '../../index'
 
 export default class InterceptorManager {
   handlers: any[] = []

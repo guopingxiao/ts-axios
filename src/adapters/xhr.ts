@@ -1,7 +1,7 @@
 import settle from '../core/settle'
 import createError from '../core/createError'
 import { isFormData, isStandardBrowserEnv } from '../helpers/utils'
-import { AxiosPromise, AxiosRequestConfig } from '..'
+import { AxiosPromise, AxiosRequestConfig } from '../../index'
 import {
   buildURL,
   cookies,

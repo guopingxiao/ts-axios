@@ -1,6 +1,3 @@
-/**
- * AxiosRequestConfig
- */
 export interface AxiosRequestConfig {
   url?: string
   method?: string
@@ -23,7 +20,6 @@ export interface AxiosRequestConfig {
   transformResponse?: AxiosTransformer | AxiosTransformer[]
   cancelToken?: CancelToken
 }
-
 
 export interface AxiosAdapter {
   (config: AxiosRequestConfig): AxiosPromise<any>
@@ -96,8 +92,6 @@ export interface CancelTokenSource {
   token: CancelToken
   cancel: Canceler
 }
-
-
 export interface AxiosInterceptorManager<V> {
   use (
     onFulfilled?: (value: V) => V | Promise<V>,
@@ -105,7 +99,6 @@ export interface AxiosInterceptorManager<V> {
   ): number
   eject (id: number): void
 }
-
 export interface AxiosInstance {
   (config: AxiosRequestConfig): AxiosPromise
   (url: string, config?: AxiosRequestConfig): AxiosPromise
@@ -146,7 +139,6 @@ export interface AxiosInstance {
     config?: AxiosRequestConfig
   ): Promise<R>
 }
-
 export interface AxiosStatic extends AxiosInstance {
   Cancel: CancelStatic
   create (config?: AxiosRequestConfig): AxiosInstance
