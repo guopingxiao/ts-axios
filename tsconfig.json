@@ -2,7 +2,7 @@
   "compileOnSave": false,
   "include": [
     "src",
-    "test"
+    "test", "index.d.ts"
   ],
   "exclude": [
     "dist",
