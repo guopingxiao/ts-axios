@@ -1,4 +1,4 @@
-import { Interceptor } from '../type'
+import { Interceptor } from '..'
 
 export default class InterceptorManager {
   handlers: any[] = []

@@ -1,5 +1,5 @@
 import Cancel from './Cancel'
-import { Canceler } from '../type'
+import { Canceler } from '..'
 
 export default class CancelToken {
   promise: Promise<Cancel>

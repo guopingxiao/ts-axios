@@ -1,5 +1,5 @@
 import enhanceError from './enhanceError'
-import { AxiosRequestConfig, AxiosResponse } from '../type'
+import { AxiosRequestConfig, AxiosResponse } from '..'
 
 const createError = (
   message: string,

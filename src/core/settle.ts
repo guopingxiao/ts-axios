@@ -1,5 +1,5 @@
 import createError from './createError'
-import { AxiosError, AxiosReslove, AxiosResponse } from '../type'
+import { AxiosError, AxiosReslove, AxiosResponse } from '..'
 
 const settle = (
   resolve: AxiosReslove,

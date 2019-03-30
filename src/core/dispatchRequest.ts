@@ -1,6 +1,6 @@
 import defaults from '../config/defaults'
 import { isCancel } from '../cancel/index'
-import { AxiosAdapter, AxiosRequestConfig } from '../type'
+import { AxiosAdapter, AxiosRequestConfig } from '..'
 import { combineURLs, isAbsoluteURL, transformData } from '../helpers/index'
 
 const throwIfCancellationRequested = (config: AxiosRequestConfig) => {

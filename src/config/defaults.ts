@@ -1,5 +1,5 @@
 import XHR from '../adapters/xhr'
-import { AxiosRequestConfig } from '../type'
+import { AxiosRequestConfig } from '..'
 import { normalizeHeaderName } from '../helpers/index'
 import {
   isArrayBuffer,

@@ -1,7 +1,7 @@
 import settle from '../core/settle'
 import createError from '../core/createError'
 import { isFormData, isStandardBrowserEnv } from '../helpers/utils'
-import { AxiosPromise, AxiosRequestConfig } from '../type'
+import { AxiosPromise, AxiosRequestConfig } from '..'
 import {
   buildURL,
   cookies,
@@ -9,9 +9,14 @@ import {
   parseHeaders
 } from '../helpers/index'
 
-const xhrAdapter = (config: AxiosRequestConfig): AxiosPromise => {
+/**
+ * 返回一个Promoise对象
+ * @param config AxiosRequestConfig
+ */
+const xhr = (config: AxiosRequestConfig): AxiosPromise => {
   return new Promise((resolve, reject) => {
-    const {
+
+    const { // defaultConfig
       headers: requestHeaders,
       data: requestData,
       method = 'get',
@@ -28,8 +33,13 @@ const xhrAdapter = (config: AxiosRequestConfig): AxiosPromise => {
       xsrfHeaderName,
       xsrfCookieName
     } = config
+
+    // 创建XMLHttpRequest对象
     let request: XMLHttpRequest | null = new XMLHttpRequest()
 
+    /**
+     * 设置Headers信息
+     */
     const setHeaders = () => {
       if (!request) {
         return
@@ -57,15 +67,12 @@ const xhrAdapter = (config: AxiosRequestConfig): AxiosPromise => {
         }
       }
 
-      // 通过 XHR 的 setRequestHeader 方法设置请求头信息
+      // xhr.setRequestHeader()设置请求头信息
       if ('setRequestHeader' in requestHeaders) {
         for (const key in requestHeaders) {
           if (requestHeaders.hasOwnProperty(key)) {
             const val = requestHeaders[key]
-            if (
-              typeof requestData === 'undefined' &&
-              key.toLowerCase() === 'content-type'
-            ) {
+            if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
               delete requestHeaders[key]
             } else {
               request.setRequestHeader(key, val)
@@ -75,6 +82,9 @@ const xhrAdapter = (config: AxiosRequestConfig): AxiosPromise => {
       }
     }
 
+    /**
+     *设置xhr,处理服务器响应
+     */
     const setXHR = () => {
       if (!request) {
         return
@@ -82,7 +92,7 @@ const xhrAdapter = (config: AxiosRequestConfig): AxiosPromise => {
 
       timeout && (request.timeout = timeout)
 
-      request.onreadystatechange = () => {
+      request.onreadystatechange = () => { // 服务器返回
         if (!request || request.readyState !== 4) {
           return
         }
@@ -95,10 +105,7 @@ const xhrAdapter = (config: AxiosRequestConfig): AxiosPromise => {
         } = request
 
         // 请求使用 file 协议，部分浏览器会返回 status 为 0 ( 即使请求成功 )
-        if (
-          status === 0 &&
-          !(responseURL && responseURL.indexOf('file:') === 0)
-        ) {
+        if (status === 0 && !(responseURL && responseURL.indexOf('file:') === 0)) {
           return
         }
 
@@ -108,8 +115,7 @@ const xhrAdapter = (config: AxiosRequestConfig): AxiosPromise => {
             ? parseHeaders(request.getAllResponseHeaders())
             : null
 
-        const responseData =
-          !responseType || responseType === 'text' ? responseText : response
+        const responseData = !responseType || responseType === 'text' ? responseText : response
 
         const newResponse = {
           data: responseData,
@@ -122,7 +128,7 @@ const xhrAdapter = (config: AxiosRequestConfig): AxiosPromise => {
 
         settle(resolve, reject, newResponse)
 
-        // Clean up request
+        // 清空request
         request = null
       }
       request.onabort = () => {
@@ -132,12 +138,11 @@ const xhrAdapter = (config: AxiosRequestConfig): AxiosPromise => {
 
         reject(createError('Request aborted', config, 'ECONNABORTED', request))
 
-        // Clean up request
+        // 清空request
         request = null
       }
       request.onerror = () => {
-        // Real errors are hidden from us by the browser
-        // onerror should only fire if it's a network error
+        // Real errors are hidden from us by the browser, onerror should only fire if it's a network error
         reject(createError('Network Error', config, '', request))
 
         request = null
@@ -191,6 +196,10 @@ const xhrAdapter = (config: AxiosRequestConfig): AxiosPromise => {
       }
     }
 
+    /**
+     * 与服务器建立连接
+     * xhr.open(method, url, async)
+     */
     const openXHR = () => {
       if (!request) {
         return
@@ -202,6 +211,10 @@ const xhrAdapter = (config: AxiosRequestConfig): AxiosPromise => {
       )
     }
 
+    /**
+     * xhr.send()
+     * 将请求送往服务器
+     */
     const sendXHR = () => {
       if (!request) {
         return
@@ -216,4 +229,4 @@ const xhrAdapter = (config: AxiosRequestConfig): AxiosPromise => {
   })
 }
 
-export default xhrAdapter
+export default xhr

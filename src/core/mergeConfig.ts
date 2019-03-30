@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from '../type'
+import { AxiosRequestConfig } from '..'
 import { isObject } from '../helpers/utils'
 
 export function mergeDeep (target: any, ...sources: any): object {

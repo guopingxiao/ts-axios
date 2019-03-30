@@ -1,4 +1,4 @@
-import { AxiosError, AxiosRequestConfig, AxiosResponse } from '../type'
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from '..'
 
 const enhanceError = (
   error: any,
