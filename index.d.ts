@@ -55,6 +55,9 @@ export interface Cancel {
   message: string
 }
 
+/**
+ * Interceptor 拦截器fulfilled,rejected
+ */
 export interface Interceptor {
   fulfilled: (data: any) => any
   rejected: (error: any) => any

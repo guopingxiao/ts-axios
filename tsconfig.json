@@ -1,12 +1,11 @@
 {
   "compileOnSave": false,
   "include": [
-    "src",
-    "test", "index.d.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
-    "dist",
-    "node_modules"
+      "node_modules",
+      "dist"
   ],
   "compilerOptions": {
     "outDir": "./dist",
@@ -14,10 +13,10 @@
     "declaration": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "pretty": true,
     "strictNullChecks": true,
     "noImplicitReturns": true,
     "noUnusedParameters": true,
+    "esModuleInterop": true,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -27,7 +26,8 @@
       "node_modules/@types"
     ],
     "types": [
-      "@types/node"
+      "@types/node",
+      "@types/jest"
     ],
     "lib": [
       "es2017",
