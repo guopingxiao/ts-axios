@@ -1,4 +1,4 @@
-import axios from '../index'
+import axios from '../src/index'
 
 describe('static api', function () {
   it('should have request method helpers', function () {

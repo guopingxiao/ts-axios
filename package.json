@@ -6,7 +6,7 @@
   "main": "./src/index.ts",
   "scripts": {
     "dev": "parcel ./src/index.html",
-    "test": "npx jest src/",
+    "test": "npx jest __test__/api.spec.ts",
     "cover": "npx jest --coverage src",
     "build": "parcel build ./src/index.ts"
   },
@@ -19,6 +19,7 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "jest": "^24.5.0",
+    "jsdom": "^14.0.0",
     "ts-jest": "^24.0.1"
   },
   "dependencies": {

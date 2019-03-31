@@ -1,8 +1,20 @@
 import Axios from './core/Axios'
-import { AxiosRequestConfig, AxiosStatic } from '../index'
+import mergeConfig from './core/mergeConfig'
+import defaults from './config/defaults'
 import { Cancel, CancelToken, isCancel } from './cancel/index'
-import mergeConfig from './helpers/mergeConfig'
-import { extend } from './helpers/utils'
+import { forEach } from './helpers/utils'
+import { AxiosRequestConfig, AxiosStatic } from '../index'
+
+const extend = (a: any, b: any, thisArg?: any) => {
+  forEach(b, function assignValue (val: any, key: any) {
+    if (thisArg && typeof val === 'function') {
+      a[key] = val.bind(thisArg)
+    } else {
+      a[key] = val
+    }
+  })
+  return a
+}
 
 const createInstance = (defaultConfig: AxiosRequestConfig) => {
   const context = new Axios(defaultConfig)

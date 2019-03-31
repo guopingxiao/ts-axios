@@ -65,12 +65,8 @@ const isURLSearchParams = (val: any) => {
 }
 
 const isStandardBrowserEnv = () => {
-  if (
-    navigator &&
-    (navigator.product === 'ReactNative' ||
-      navigator.product === 'NativeScript' ||
-      navigator.product === 'NS')
-  ) {
+  if (navigator &&
+    (navigator.product === 'ReactNative' || navigator.product === 'NativeScript' || navigator.product === 'NS')) {
     return false
   }
 
