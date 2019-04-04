@@ -1,8 +1,8 @@
-import settle from '../core/settle'
-import mergeConfig from '../core/mergeConfig'
-import defaults from '../config/defaults'
-import enhanceError from '../core/enhanceError'
-import createError from '../core/createError'
+import settle from '../src/core/settle'
+import mergeConfig from '../src/core/mergeConfig'
+import defaults from '../src/config/defaults'
+import enhanceError from '../src/core/enhanceError'
+import createError from '../src/core/createError'
 
 describe('core/settle', function () {
   let resolve: any
@@ -188,8 +188,7 @@ describe('core/createError', function () {
     expect(error.isAxiosError).toBe(true)
   })
   it('should create an Error that can be serialized to JSON', function () {
-    // Attempting to serialize request and response results in
-    //    TypeError: Converting circular structure to JSON
+    // Attempting to serialize request and response results in. TypeError: Converting circular structure to JSON
     const request: any = { path: '/foo' }
     const response: any = { status: 200, data: { foo: 'bar' } }
     const params: any = { foo: 'bar' }

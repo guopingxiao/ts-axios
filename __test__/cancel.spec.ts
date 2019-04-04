@@ -1,4 +1,4 @@
-import { Cancel, CancelToken, isCancel } from '../cancel'
+import { Cancel, CancelToken, isCancel } from '../src/cancel'
 
 describe('isCancel', function () {
   it('returns true if value is a Cancel', function () {

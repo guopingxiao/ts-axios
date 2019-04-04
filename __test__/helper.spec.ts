@@ -7,7 +7,7 @@ import {
   normalizeHeaderName,
   parseHeaders,
   transformData
-} from '../helpers/index'
+} from '../src/helpers/index'
 
 describe('helpers/buildURL', function () {
   it('should support null params', function () {

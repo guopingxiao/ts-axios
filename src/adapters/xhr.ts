@@ -91,46 +91,50 @@ const xhr = (config: AxiosRequestConfig): AxiosPromise => {
       }
 
       timeout && (request.timeout = timeout)
+      try {
+        request.onreadystatechange = () => { // 服务器返回
+          if (!request || request.readyState !== 4) {
+            return
+          }
+          const {
+            status,
+            responseURL,
+            responseText,
+            response,
+            statusText
+          } = request
 
-      request.onreadystatechange = () => { // 服务器返回
-        if (!request || request.readyState !== 4) {
-          return
+          // 请求使用 file 协议，部分浏览器会返回 status 为 0 ( 即使请求成功 )
+          if (status === 0 && !(responseURL && responseURL.indexOf('file:') === 0)) {
+            return
+          }
+
+          // 这边必须使用 request.getAllResponseHeaders ，否则报 Uncaught TypeError: Illegal invocation
+          const responseHeaders =
+            'getAllResponseHeaders' in request
+              ? parseHeaders(request.getAllResponseHeaders())
+              : null
+
+          const responseData = !responseType || responseType === 'text' ? responseText : response
+
+          const newResponse = {
+            data: responseData,
+            status: status,
+            statusText: statusText,
+            headers: responseHeaders,
+            config: config,
+            request: request
+          }
+
+          settle(resolve, reject, newResponse)
+
+          // 清空request
+          request = null
         }
-        const {
-          status,
-          responseURL,
-          responseText,
-          response,
-          statusText
-        } = request
-
-        // 请求使用 file 协议，部分浏览器会返回 status 为 0 ( 即使请求成功 )
-        if (status === 0 && !(responseURL && responseURL.indexOf('file:') === 0)) {
-          return
-        }
-
-        // 这边必须使用 request.getAllResponseHeaders ，否则报 Uncaught TypeError: Illegal invocation
-        const responseHeaders =
-          'getAllResponseHeaders' in request
-            ? parseHeaders(request.getAllResponseHeaders())
-            : null
-
-        const responseData = !responseType || responseType === 'text' ? responseText : response
-
-        const newResponse = {
-          data: responseData,
-          status: status,
-          statusText: statusText,
-          headers: responseHeaders,
-          config: config,
-          request: request
-        }
-
-        settle(resolve, reject, newResponse)
-
-        // 清空request
-        request = null
+      } catch (error) {
+console.log(error)
       }
+
       request.onabort = () => {
         if (!request) {
           return

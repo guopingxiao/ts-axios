@@ -12,7 +12,7 @@ import {
   isString,
   isURLSearchParams,
   trim
-} from '../helpers/utils'
+} from '../src/helpers/utils'
 
 describe('src/helpers/utils Is.. ：', function () {
   it('should validate Array', function () {

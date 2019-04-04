@@ -6,12 +6,13 @@
   "main": "./src/index.ts",
   "scripts": {
     "dev": "parcel ./src/index.html",
-    "test": "npx jest __test__/api.spec.ts",
-    "cover": "npx jest --coverage src",
+    "test": "npx jest __test__/interceptors.spec.ts",
+    "cover": "npx jest --coverage __test__/",
     "build": "parcel build ./src/index.ts"
   },
   "devDependencies": {
     "@types/jest": "^24.0.11",
+    "@types/sinon": "^7.0.11",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.16.0",
@@ -20,6 +21,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "jest": "^24.5.0",
     "jsdom": "^14.0.0",
+    "sinon": "^7.3.1",
     "ts-jest": "^24.0.1"
   },
   "dependencies": {
