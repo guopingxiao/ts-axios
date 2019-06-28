@@ -59,7 +59,7 @@ function normalizeHeaderName (headers: any, normalizedName: string): void {
 
 export function processHeaders (headers: any, data: any): any {
   normalizeHeaderName(headers, 'Content-Type')
-  
+
   if (isPlainObject(data)) {
     if (headers && !headers['Content-Type']) {
       headers['Content-Type'] = 'application/json;charset=utf-8'
@@ -102,7 +102,7 @@ function transformHeaders (config: AxiosRequestConfig) {
 }
 ```
 
-因为我们处理 `header` 的时候依赖了 `data`，所以要在处理请求 `body` 数据之前处理请求 `header`。
+因为我们处理 `header` 的时候依赖了 `data`，所以要在处理请求 `body` 数据之前处理请求 `header`, 如果先处理data, header的data判断就不是原始data,而是序列化后的JSON。
 
 `xhr.ts`：
 

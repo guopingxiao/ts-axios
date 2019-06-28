@@ -12,9 +12,9 @@
 axios({
   method: 'post',
   url: '/base/post',
-  data: { 
+  data: {
     a: 1,
-    b: 2 
+    b: 2
   }
 })
 ```
@@ -76,7 +76,7 @@ if (isDate(val)) {
 
 ```typescript
 import { transformRequest } from './helpers/data'
-
+```
 ```typescript
 function processConfig (config: AxiosRequestConfig): void {
   config.url = transformURL(config)

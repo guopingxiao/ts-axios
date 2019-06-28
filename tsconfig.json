@@ -1,7 +1,8 @@
 {
   "compileOnSave": false,
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "axios/**/*.ts"
   ],
   "exclude": [
       "node_modules",
