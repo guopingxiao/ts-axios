@@ -64,7 +64,7 @@ export interface AxiosRequestConfig {
 
 首先定义一个 `Axios` 类型接口，它描述了 `Axios` 类中的公共方法，接着定义了 `AxiosInstance` 接口继承 `Axios`，它就是一个混合类型的接口。
 
-另外 `AxiosRequestConfig` 类型接口中的 `url` 属性变成了可选属性。
+另外 `AxiosRequestConfig` 类型接口中的 `url` 属性变成了可选属性。因为很多方法是在前面传了url了
 
 ## 创建 Axios 类
 

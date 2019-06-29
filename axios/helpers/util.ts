@@ -11,3 +11,12 @@ export function isObject(val:any): val is Object {
 export function isPlaintObject(val:any) {
   return toString.call(val) === '[object Object]'
 }
+
+export function extend<T, U>(target:T, source:U): T & U {
+  for (const key in source) {
+    if (!(target as T&U)[key] && source[key] !== undefined) {
+      (target as T&U)[key] = source[key] as any
+    }
+  }
+  return target as T & U
+}
