@@ -57,8 +57,7 @@ axios.interceptors.request.eject(myInterceptor)
 
 在这个 Promise 链的执行过程中，请求拦截器 `resolve` 函数处理的是 `config` 对象，而相应拦截器 `resolve` 函数处理的是 `response` 对象。
 
-在了解了拦截器工作流程后，我们先要创建一个拦截器管理类，允许我们去添加
-删除和遍历拦截器。
+在了解了拦截器工作流程后，我们先要创建一个拦截器管理类，允许我们去**添加、删除和遍历**拦截器。
 
 ## 拦截器管理类实现
 
@@ -91,6 +90,7 @@ export interface RejectedFn {
 ### 代码实现
 
 ```typescript
+// core/InterceptorManager.ts
 import { ResolvedFn, RejectedFn } from '../types'
 
 interface Interceptor<T> {
@@ -129,7 +129,7 @@ export default class InterceptorManager<T> {
 }
 ```
 
-我们定义了一个 `InterceptorManager` 泛型类，内部维护了一个私有属性 `interceptors`，它是一个数组，用来存储拦截器。该类还对外提供了 3 个方法，其中 `use` 接口就是添加拦截器到 `interceptors` 中，并返回一个 `id` 用于删除；`forEach` 接口就是遍历 `interceptors` 用的，它支持传入一个函数，遍历过程中会调用该函数，并把每一个 `interceptor` 作为该函数的参数传入；`eject` 就是删除一个拦截器，通过传入拦截器的 `id` 删除。
+我们定义了一个 `InterceptorManager` 泛型类，内部维护了一个私有属性 `interceptors`，定义了一个Interceptor 的泛型数组来约束它，内部使用的就不定义在types里了；它是一个数组，用来存储拦截器。该类还对外提供了 3 个方法，其中 `use` 接口就是添加拦截器到 `interceptors` 中，并返回一个 `id` 用于删除；`forEach` 接口就是遍历 `interceptors` 用的，它支持传入一个函数，遍历过程中会调用该函数，并把每一个 `interceptor` 作为该函数的参数传入；`eject` 就是删除一个拦截器，通过传入拦截器的 `id` 删除。
 
 ## 链式调用实现
 
