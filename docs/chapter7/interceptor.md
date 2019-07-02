@@ -51,7 +51,7 @@ axios.interceptors.request.eject(myInterceptor)
 
 我们先用一张图来展示一下拦截器工作流程：
 
-<img :src="$withBase('/interceptor.png')" alt="interceptor">
+<img src="./interceptor.png" alt="interceptor">
 
 整个过程是一个链式调用的方式，并且每个拦截器都可以支持同步和异步处理，我们自然而然地就联想到使用 Promise 链的方式来实现整个调用过程。
 
@@ -204,7 +204,59 @@ request(url: any, config?: any): AxiosPromise {
 首先，构造一个 `PromiseChain` 类型的数组 `chain`，并把 `dispatchRequest` 函数赋值给 `resolved` 属性；接着先遍历请求拦截器插入到 `chain` 的前面；然后再遍历响应拦截器插入到 `chain` 后面。
 
 接下来定义一个已经 resolve 的 `promise`，循环这个 `chain`，拿到每个拦截器对象，把它们的 `resolved` 函数和 `rejected` 函数添加到 `promise.then` 的参数中，这样就相当于通过 Promise 的链式调用方式，实现了拦截器一层层的链式调用的效果。
+```js
+/** 简单解释链式调用，定义一个promiseRequest */
+let requestPromise = function () {
+  let chain = [{
+    resolved: () => { console.log('xhr'); return 'xhr'},
+    rejected: () => 'rejected'
+  }]
 
+  let requestInters = ['request1', 'request2', 'request3']
+  requestInters.forEach(request => {
+    chain.unshift({
+      resolved: () => { console.log(request); return request},
+      rejected: () => `${err}${request}`
+    })
+  })
+
+  let responseInters = ['response1', 'response2', 'response3']
+  responseInters.forEach(response => {
+    chain.push({
+      resolved: () => { console.log(response); return response},
+      rejected: () => `${err}${response}`
+    })
+  })
+
+  let promise = Promise.resolve('config')
+
+  while (chain.length) {
+    let { resolved, rejected } = chain.shift()
+    // 精华都是在这句
+
+    promise = promise.then(resolved, rejected)
+  }
+  // return promise调用链
+  // promise.then(resolved1, rejected1).then(resolved2, rejected2).then(resolved2, rejected3).then() ....
+  return promise
+}
+
+requestPromise().then(res => {
+
+  console.log(res)
+  // request3
+  // request2
+  // request1
+  // xhr
+  // response1
+  // response2
+  // response3
+  // response3
+})
+
+
+
+```
 注意我们拦截器的执行顺序，对于请求拦截器，先执行后添加的，再执行先添加的；而对于响应拦截器，先执行先添加的，后执行后添加的。
 
 ## demo 编写
